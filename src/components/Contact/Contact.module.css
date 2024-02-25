@@ -1,0 +1,32 @@
+
+.contact {
+ padding: 0;
+ max-width: 100%;
+ padding: 10px;
+ background-color: #ffffff;
+ border: 1px solid #423d3d;
+ border-radius: 12px;
+ margin-bottom: 5px;
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ font-size: 16px;
+}
+
+.contactTitle p{
+ margin: 0 auto;
+ display: flex;
+}
+
+p .icon{
+ color: #a32626;
+ margin-right: 10px;
+}
+
+.btnContact {
+ padding: 4px 8px;
+ cursor: pointer;
+ border-radius: 8px;
+ border: 1px solid #a32626;
+}
+

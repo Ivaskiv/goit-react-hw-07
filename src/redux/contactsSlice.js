@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, nanoid } from '@reduxjs/toolkit';
 import { addContact, deleteContact, fetchContacts, toggleCompleted } from './contactsOperations';
 
 // Створення slice для управління контактами
@@ -27,14 +27,25 @@ const contactsSlice = createSlice({
         state.isLoading = false;
         state.error = action.error.message;
       })
+      .addCase(addContact.pending, state => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      // Додавання нового контакту до масиву
       .addCase(addContact.fulfilled, (state, action) => {
-        state.items.push(action.payload); // Додавання нового контакту до масиву
+        const newContact = action.payload;
+        newContact.id = nanoid();
+        state.items.push(newContact);
         state.isLoading = false;
         state.error = null;
       })
       .addCase(addContact.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
+      })
+      .addCase(deleteContact.pending, state => {
+        state.isLoading = false;
+        state.error = null;
       })
       .addCase(deleteContact.fulfilled, (state, action) => {
         state.items = state.items.filter(contact => contact.id !== action.payload);
@@ -48,7 +59,8 @@ const contactsSlice = createSlice({
       .addCase(toggleCompleted.fulfilled, (state, action) => {
         state.items = state.items.map(contact => {
           if (contact.id === action.payload.id) {
-            return action.payload; // Оновлення стану контакту залежно від отриманих даних
+            // Оновлення стану контакту залежно від отриманих даних
+            return action.payload;
           }
           return contact;
         });

@@ -17,7 +17,7 @@ export const fetchContacts = createAsyncThunk('contacts/fetchAll', async (_, thu
 export const addContact = createAsyncThunk('contacts/addContact', async (newContact, thunkAPI) => {
   try {
     // Виклик HTTP-запиту POST для додавання контактів
-    const responce = await axios.post('/contacts', { newContact });
+    const responce = await axios.post('/contacts', newContact);
     return responce.data;
   } catch (e) {
     return thunkAPI.rejectWithValue(e.message);
@@ -29,8 +29,9 @@ export const deleteContact = createAsyncThunk(
   async (contactId, thunkAPI) => {
     try {
       // Виклик HTTP-запиту DELETE для видалення
-      const responce = await axios.delete(`/contacts/${contactId}`);
-      return responce.data;
+      await axios.delete(`/contacts/${contactId}`);
+      // Повернення ідентифікатора для видалення з локального стану
+      return contactId;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
@@ -53,4 +54,3 @@ export const toggleCompleted = createAsyncThunk(
     }
   }
 );
-export default { fetchContacts, addContact, deleteContact, toggleCompleted };

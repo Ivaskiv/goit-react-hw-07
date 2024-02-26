@@ -13,12 +13,12 @@ const ContactList = () => {
   };
   return (
     <ul className={css.contactList}>
-      {visibleContacts.map(({ id, name, number }) => (
+      {visibleContacts.map(({ id, name, phone }) => (
         <Contact
-          key={id + name}
-          id={id}
+          key={id}
+          id={id + name}
           name={name}
-          number={number}
+          phone={phone}
           onDelete={() => handleDeleteContact(id)}
         />
       ))}
